@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Kết Quả Tra Cứu Điểm</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f4f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4CAF50; /* Màu xanh lá cho tiêu đề */
+            color: #fff; /* Màu chữ trắng cho tiêu đề */
+        }
+
+        td {
+            background-color: #e8f5e9; /* Màu xanh lá nhạt cho ô điểm */
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 10px;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #fff; /* Màu chữ trắng */
+            background-color: #5c9ead; /* Màu nền nút */
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        a:hover {
+            background-color: #4b8d9b; /* Màu nền khi hover */
+            color: #fff; /* Màu chữ khi hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Kết Quả Tra Cứu Điểm</h1>
+        </header>
+        
+        <!-- Hiển thị Số Báo Danh -->
+        <h2>Số Báo Danh: {{ sbd }}</h2>
+        
+        <!-- Hiển thị điểm -->
+        {% if points %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Môn Học</th>
+                        <th>Điểm</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for subject, score in points.items() %}
+                        <tr>
+                            <td>{{ subject }}</td>
+                            <td>{{ score }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>Không có dữ liệu điểm cho Số Báo Danh này.</p>
+        {% endif %}
+        
+        <!-- Thông báo lỗi nếu có -->
+        {% if error %}
+            <p class="error-message">{{ error }}</p>
+        {% endif %}
+        
+        <a href="{{ url_for('index') }}">Trở về trang chính</a>
+    </div>
+</body>
+</html>

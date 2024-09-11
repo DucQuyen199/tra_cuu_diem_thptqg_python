@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Tra Cứu Điểm Thi THPT Quốc Gia</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e8f0f2; /* Nền màu nhẹ nhàng và dịu */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 450px; /* Điều chỉnh kích thước tối đa của form */
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+            margin-top: 0; /* Đặt margin-top bằng 0 để căn chỉnh chính xác */
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%; /* Đảm bảo form chiếm toàn bộ chiều rộng của container */
+        }
+
+        label {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #555;
+            width: 100%;
+            max-width: 350px; /* Điều chỉnh kích thước tối đa của label */
+            text-align: left; /* Căn chỉnh văn bản bên trái */
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+            font-size: 14px;
+            width: 100%;
+            max-width: 350px; /* Điều chỉnh kích thước tối đa của input */
+            box-sizing: border-box;
+            background-color: #f9f9f9;
+        }
+
+        button {
+            padding: 12px;
+            border-radius: 5px;
+            border: none;
+            background-color: #4a90e2; /* Màu nền nút dịu hơn */
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+            max-width: 350px; /* Điều chỉnh kích thước tối đa của button */
+        }
+
+        button:hover {
+            background-color: #357abd; /* Màu nền nút khi hover */
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 10px;
+            font-size: 14px;
+            width: 100%;
+            max-width: 350px; /* Điều chỉnh kích thước tối đa của thông báo lỗi */
+            text-align: left; /* Căn chỉnh văn bản bên trái */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Tra Cứu Điểm Thi THPT Quốc Gia</h1>
+        </header>
+        <form action="/search" method="get">
+            <label for="sbd">Số Báo Danh:</label>
+            <input type="text" id="sbd" name="sbd" required maxlength="8" placeholder="Nhập số báo danh" value="{{ sbd }}">
+            
+            <!-- Thông báo lỗi nếu có -->
+            {% if error %}
+                <p class="error-message">{{ error }}</p>
+            {% endif %}
+            
+            <button type="submit">Tra cứu</button>
+        </form>
+    </div>
+</body>
+</html>
