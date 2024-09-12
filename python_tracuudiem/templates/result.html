@@ -44,12 +44,12 @@
         }
 
         th {
-            background-color: #4CAF50; /* Màu xanh lá cho tiêu đề */
-            color: #fff; /* Màu chữ trắng cho tiêu đề */
+            background-color: #4CAF50;
+            color: #fff;
         }
 
         td {
-            background-color: #e8f5e9; /* Màu xanh lá nhạt cho ô điểm */
+            background-color: #e8f5e9;
         }
 
         .error-message {
@@ -61,16 +61,16 @@
             display: inline-block;
             margin-top: 20px;
             text-decoration: none;
-            color: #fff; /* Màu chữ trắng */
-            background-color: #5c9ead; /* Màu nền nút */
+            color: #fff;
+            background-color: #5c9ead;
             padding: 10px 20px;
             border-radius: 5px;
             font-weight: bold;
         }
 
         a:hover {
-            background-color: #4b8d9b; /* Màu nền khi hover */
-            color: #fff; /* Màu chữ khi hover */
+            background-color: #4b8d9b;
+            color: #fff;
         }
     </style>
 </head>
@@ -85,6 +85,7 @@
         
         <!-- Hiển thị điểm -->
         {% if points %}
+            <h3>Điểm từng môn:</h3>
             <table>
                 <thead>
                     <tr>
@@ -103,6 +104,27 @@
             </table>
         {% else %}
             <p>Không có dữ liệu điểm cho Số Báo Danh này.</p>
+        {% endif %}
+
+        <!-- Hiển thị điểm các khối thi -->
+        {% if block_scores %}
+            <h3>Điểm các khối thi:</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Khối Thi</th>
+                        <th>Điểm</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for block, score in block_scores.items() %}
+                        <tr>
+                            <td>{{ block }}</td>
+                            <td>{{ score }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         {% endif %}
         
         <!-- Thông báo lỗi nếu có -->
