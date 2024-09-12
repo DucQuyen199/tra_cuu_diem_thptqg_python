@@ -41,6 +41,84 @@ def format_score(score):
 def index():
     return render_template('index.html', error="", sbd="")
 
+# Hàm tính điểm khối thi
+def calculate_block_scores(points):
+    block_scores = {}
+
+    # Khối A: Toán, Vật Lý, Hóa Học
+    if all(points.get(subject) is not None for subject in ["Toán", "Vật Lý", "Hóa Học"]):
+        block_scores["Khối A"] = (
+            float(points["Toán"]) +
+            float(points["Vật Lý"]) +
+            float(points["Hóa Học"])
+        )
+
+    # Khối A1: Toán, Vật Lý, Ngoại Ngữ
+    if all(points.get(subject) is not None for subject in ["Toán", "Vật Lý", "Ngoại Ngữ"]):
+        block_scores["Khối A1"] = (
+            float(points["Toán"]) +
+            float(points["Vật Lý"]) +
+            float(points["Ngoại Ngữ"])
+        )
+
+    # Khối B: Toán, Hóa Học, Sinh Học
+    if all(points.get(subject) is not None for subject in ["Toán", "Hóa Học", "Sinh Học"]):
+        block_scores["Khối B"] = (
+            float(points["Toán"]) +
+            float(points["Hóa Học"]) +
+            float(points["Sinh Học"])
+        )
+
+    # Khối C: Ngữ Văn, Lịch Sử, Địa Lý
+    if all(points.get(subject) is not None for subject in ["Ngữ Văn", "Lịch Sử", "Địa Lý"]):
+        block_scores["Khối C"] = (
+            float(points["Ngữ Văn"]) +
+            float(points["Lịch Sử"]) +
+            float(points["Địa Lý"])
+        )
+
+    # Khối D: Toán, Ngữ Văn, Ngoại Ngữ
+    if all(points.get(subject) is not None for subject in ["Toán", "Ngữ Văn", "Ngoại Ngữ"]):
+        block_scores["Khối D"] = (
+            float(points["Toán"]) +
+            float(points["Ngữ Văn"]) +
+            float(points["Ngoại Ngữ"])
+        )
+
+    # Khối D1: Toán, Ngữ Văn, Ngoại Ngữ (chọn Tiếng Anh)
+    if all(points.get(subject) is not None for subject in ["Toán", "Ngữ Văn", "Ngoại Ngữ"]):
+        block_scores["Khối D1"] = (
+            float(points["Toán"]) +
+            float(points["Ngữ Văn"]) +
+            float(points["Ngoại Ngữ"])
+        )
+
+    # Khối D7: Toán, Hóa Học, Ngoại Ngữ
+    if all(points.get(subject) is not None for subject in ["Toán", "Hóa Học", "Ngoại Ngữ"]):
+        block_scores["Khối D7"] = (
+            float(points["Toán"]) +
+            float(points["Hóa Học"]) +
+            float(points["Ngoại Ngữ"])
+        )
+
+    # Khối C1: Ngữ Văn, Toán, Vật Lý
+    if all(points.get(subject) is not None for subject in ["Ngữ Văn", "Toán", "Vật Lý"]):
+        block_scores["Khối C1"] = (
+            float(points["Ngữ Văn"]) +
+            float(points["Toán"]) +
+            float(points["Vật Lý"])
+        )
+
+    # Khối B2: Toán, Sinh Học, Địa Lý
+    if all(points.get(subject) is not None for subject in ["Toán", "Sinh Học", "Địa Lý"]):
+        block_scores["Khối B2"] = (
+            float(points["Toán"]) +
+            float(points["Sinh Học"]) +
+            float(points["Địa Lý"])
+        )
+
+    return block_scores
+
 @app.route('/search', methods=['GET'])
 def search():
     sbd = request.args.get('sbd').strip()
@@ -77,7 +155,10 @@ def search():
         # Lọc điểm không phải là NULL
         points = {subject: score for subject, score in points.items() if score is not None}
 
-        return render_template('result.html', sbd=sbd_value, points=points, error="")
+        # Tính điểm cho các khối thi
+        block_scores = calculate_block_scores(points)
+
+        return render_template('result.html', sbd=sbd_value, points=points, block_scores=block_scores, error="")
     else:
         return render_template('index.html', error="Không có dữ liệu cho Số Báo Danh này.")
 
